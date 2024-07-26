@@ -8,10 +8,15 @@ from validaciones import *
 app = Flask(__name__)
 
 # CORS(app)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/api/": {"origins": "*"}})
 
 conexion = MySQL(app)
 
+try:
+    conexion = MySQL(app)
+    print("Se conectó a la bd")
+except ImportError:
+    print("Vale verga la bd.")
 
 # @cross_origin
 # Métodos buenos
