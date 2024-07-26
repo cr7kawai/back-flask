@@ -8,7 +8,7 @@ from validaciones import *
 app = Flask(__name__)
 
 # CORS(app)
-CORS(app, resources={r"/api/": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 conexion = MySQL(app)
 
@@ -28,6 +28,8 @@ def login():
     username = request.json.get('username')
     password = request.json.get('password')
 
+    print(username, password)
+
     if not username or not password:
         return jsonify({'mensaje': 'Usuario y contraseña requeridos.', 'exito': False})
 
@@ -37,7 +39,7 @@ def login():
         sql = "SELECT nombre FROM usuario WHERE username = %s AND password = %s"
         cursor.execute(sql, (username, password))
         datos = cursor.fetchone()
-
+        print(datos)
         if datos:
             return jsonify({'nombre': datos[0], 'mensaje': 'Inicio de sesión exitoso.', 'exito': True})
         else:
